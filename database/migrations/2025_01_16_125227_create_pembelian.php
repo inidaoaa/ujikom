@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tahun_pembelian');
             $table->string('harga');
             $table->string('keterangan');
-            $table->unsignedBigInteger('jumlah');
+            $table->unsignedBigInteger('jumlah')->default(0);
             $table->unsignedBigInteger('id_databarang')->nullable(); // Menambahkan nullable
             $table->timestamps();
 

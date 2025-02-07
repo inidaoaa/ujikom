@@ -27,7 +27,7 @@
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover align-middle">
-                            <thead class="bg-primary text-white">
+                            <thead class="text-white">
                                 <tr class="text-center">
                                     <th>No</th>
                                     <th>Nama Barang</th>
@@ -58,9 +58,9 @@
                                         <form action="{{ route('barangmutasi.destroy', $mutasi->id) }}" method="POST" class="d-inline delete-confirm" data-confirm-delete="true">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">
+                                            <a href="{{route('barangmutasi.destroy', $data->id)}}" type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
                                                 <i class="fas fa-trash"></i> Delete
-                                            </button>
+                                            </a>
                                         </form>
                                     </td>
                                 </tr>

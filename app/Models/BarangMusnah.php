@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BarangMusnah extends Model
 {
+
+    use Hasfactory;
+
+    protected $table = 'barang_musnah';
+
     protected $fillable = [
         'id',
         'nama_barang',
@@ -13,11 +19,11 @@ class BarangMusnah extends Model
         'tanggal_pemusnahan',
         'keterangan',
         'jumlah',
-        'id_data_barang',
+        'id_databarang',
 
     ];
 
-    public function databarang() {
-        return this->belongsTo(Databarang::class);
+    public function dataBarang() {
+        return $this->belongsTo(DataBarang::class, 'id_databarang');
     }
 }

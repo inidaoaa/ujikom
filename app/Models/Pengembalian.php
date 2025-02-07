@@ -14,6 +14,6 @@ class Pengembalian extends Model
         'lokasi_awal',
         'lokasi_pinjam',
         'ruangan',
-        
+        '',
     ];
 }

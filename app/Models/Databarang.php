@@ -29,4 +29,16 @@ class Databarang extends Model
         return $this->hasMany(Pembelian::class, 'id_databarang');
     }
 
+    public function barangMusnah()
+    {
+    return $this->hasMany(BarangMusnah::class, 'id_databarang');
+    }
+
+    public function peminjaman()
+    {
+    return $this->hasMany(Peminjaman::class, 'id_databarang');
+    }
+
+
+
 }

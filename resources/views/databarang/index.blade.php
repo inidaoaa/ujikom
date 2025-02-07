@@ -27,7 +27,7 @@
 
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover align-middle">
-                                <thead class="bg-primary text-white">
+                                <thead class="text-white">
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>Nama Barang</th>
@@ -49,7 +49,7 @@
                                             @if($data->jumlah <= 0)
                                                 <span class="text-muted">Belum Ditambahkan</span>
                                             @else
-                                                {{ $data->jumlah + $data->pembelians_sum_jumlah }}
+                                                {{ $data->jumlah }}
                                             @endif
                                         </td>
                                         <td class="text-center">
@@ -57,12 +57,12 @@
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
 
-                                            <form action="{{ route('databarang.destroy', $data->id) }}" method="POST" class="d-inline delete-confirm" data-confirm-delete="true">
+                                            <form action="{{ route('databarang.destroy', $data->id) }}" method="POST" class="d-inline delete-confirm">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                <a href="{{route('databarang.destroy', $data->id)}}" type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
                                                     <i class="fas fa-trash"></i> Delete
-                                                </button>
+                                                </a>
                                             </form>
                                         </td>
                                     </tr>

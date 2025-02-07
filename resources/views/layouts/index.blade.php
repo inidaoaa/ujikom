@@ -234,7 +234,7 @@ License: For each use you must have a valid license purchased only from above li
 										<!--begin:Menu item-->
                                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                             <!--begin:Menu link-->
-                                            <a href="barang-musnah.html" class="menu-link">
+                                            <a href="{{route('barangmusnah.index')}}" class="menu-link">
                                                 <span class="menu-icon">
                                                     <!-- Menggunakan ikon trash dari Font Awesome -->
                                                     <i class="fa fa-trash fs-2"></i>
@@ -269,7 +269,7 @@ License: For each use you must have a valid license purchased only from above li
 												<!--begin:Menu item-->
 												<div class="menu-item">
 													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/careers/list.html">
+													<a class="menu-link" href="{{route('peminjaman.index')}}">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
@@ -281,7 +281,7 @@ License: For each use you must have a valid license purchased only from above li
 												<!--begin:Menu item-->
 												<div class="menu-item">
 													<!--begin:Menu link-->
-													<a class="menu-link" href="pages/careers/apply.html">
+													<a class="menu-link" href="#">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>

@@ -3,62 +3,126 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BarangMusnah;
+use App\Models\DataBarang;
+use Illuminate\Support\Facades\DB;
+use Alert;
 
 class BarangMusnahController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+
+        $barangMusnah = BarangMusnah::with('dataBarang')
+            ->when($search, function ($query, $search) {
+                return $query->where('jenis_barang', 'like', "%{$search}%")
+                    ->orWhere('lokasi_mutasi', 'like', "%{$search}%");
+            })->paginate(10);
+
+        return view('barangmusnah.index', compact('barangMusnah'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $databarang = DataBarang::all();
+        return view('barangmusnah.create', compact('databarang'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_databarang' => 'required|exists:databarang,id',
+            'jenis_barang' => 'required|string|max:255',
+            'tanggal_pemusnahan' => 'required|date',
+            'keterangan' => 'nullable|string|max:255',
+            'jumlah' => 'required|integer|min:1',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $databarang = DataBarang::findOrFail($request->id_databarang);
+
+            if ($databarang->jumlah == 0) {
+                return back()->with('error', 'Stok barang habis, tidak dapat dimusnahkan!')->withInput();
+            }
+            
+            if ($databarang->jumlah < $request->jumlah) {
+                return back()->with('error', 'Jumlah barang yang dimusnahkan melebihi stok yang tersedia!')->withInput();
+            }
+
+            // Kurangi stok di DataBarang
+            $databarang->decrement('jumlah', $request->jumlah);
+
+            // Insert ke barang_musnah dengan nama_barang
+            BarangMusnah::create([
+                'id_databarang' => $request->id_databarang,
+                'nama_barang' => $databarang->nama_barang, // Tambahkan ini
+                'jenis_barang' => $request->jenis_barang,
+                'tanggal_pemusnahan' => $request->tanggal_pemusnahan,
+                'keterangan' => $request->keterangan,
+                'jumlah' => $request->jumlah,
+            ]);
+
+            DB::commit();
+
+            Alert::success('Sukses!', 'Barang berhasil dimusnahkan dan jumlah barang diperbarui.');
+            return redirect()->route('barangmusnah.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage())->withInput();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        // Tambahkan fungsi edit jika diperlukan
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'id_databarang' => 'required|exists:databarang,id',
+            'jenis_barang' => 'required|string|max:255',
+            'tanggal_pemusnahan' => 'required|date',
+            'keterangan' => 'nullable|string|max:255',
+            'jumlah' => 'required|integer|min:1',
+        ]);
+
+        $barangMusnah = BarangMusnah::findOrFail($id);
+        $databarangLama = DataBarang::findOrFail($barangMusnah->id_databarang);
+        $databarangBaru = DataBarang::findOrFail($request->id_databarang);
+
+        $databarangLama->increment('jumlah', $barangMusnah->jumlah);
+
+        if ($databarangBaru->jumlah < $request->jumlah) {
+            return back()->with('error', 'Jumlah barang yang dimusnahkan melebihi stok yang tersedia!')->withInput();
+        }
+
+        $databarangBaru->decrement('jumlah', $request->jumlah);
+
+        $barangMusnah->update([
+            'id_databarang' => $request->id_databarang,
+            'jenis_barang' => $request->jenis_barang,
+            'tanggal_pemusnahan' => $request->tanggal_pemusnahan,
+            'keterangan' => $request->keterangan,
+            'jumlah' => $request->jumlah,
+        ]);
+
+        Alert::success('Sukses!', 'Data barang musnah berhasil diperbarui.');
+        return redirect()->route('barangmusnah.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $barangMusnah = BarangMusnah::findOrFail($id);
+        $databarang = DataBarang::findOrFail($barangMusnah->id_databarang);
+
+        $databarang->increment('jumlah', $barangMusnah->jumlah);
+        $barangMusnah->delete();
+
+        Alert::success('Sukses!', 'Data barang musnah berhasil dihapus dan jumlah barang dikembalikan.');
+        return redirect()->route('barangmusnah.index');
     }
 }

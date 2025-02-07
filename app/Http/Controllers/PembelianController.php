@@ -52,17 +52,21 @@ class PembelianController extends Controller
             'id_databarang' => 'required|exists:databarang,id',
         ]);
 
+        // Simpan data pembelian
+        $pembelian = Pembelian::create($request->all());
+
+        // Temukan Databarang yang sedang dibeli
         $databarang = DataBarang::findOrFail($request->id_databarang);
 
-        // Tambahkan jumlah barang berdasarkan jumlah pembelian
+        // Tambahkan jumlah barang berdasarkan jumlah yang dibeli
         $databarang->increment('jumlah', $request->jumlah);
 
-        // Simpan data pembelian
-        Pembelian::create($request->all());
-
+        // Tampilkan pesan sukses dan alihkan kembali
         Alert::success('Sukses!', 'Pembelian berhasil ditambahkan dan jumlah barang diperbarui.');
         return redirect()->route('pembelian.index');
     }
+
+
 
 
 
@@ -100,21 +104,26 @@ class PembelianController extends Controller
             'id_databarang' => 'required|exists:databarang,id',
         ]);
 
+        // Ambil data pembelian sebelum diupdate
         $pembelian = Pembelian::findOrFail($id);
-        $databarang = DataBarang::findOrFail($request->id_databarang);
+        $databarang = DataBarang::findOrFail($pembelian->id_databarang);
 
-        // Kurangi jumlah barang lama
+        // Kurangi stok barang lama sebelum update
         $databarang->decrement('jumlah', $pembelian->jumlah);
 
-        // Update data pembelian
+        // Perbarui data pembelian dengan data baru
         $pembelian->update($request->all());
 
-        // Tambahkan jumlah barang baru sesuai dengan jumlah yang diinputkan
+        // Ambil data barang baru setelah update
+        $databarang = DataBarang::findOrFail($request->id_databarang);
+
+        // Tambahkan stok barang baru sesuai jumlah yang diperbarui
         $databarang->increment('jumlah', $request->jumlah);
 
         Alert::success('Sukses!', 'Pembelian berhasil diperbarui dan jumlah barang disesuaikan.');
         return redirect()->route('pembelian.index');
     }
+
 
 
 

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Peminjaman extends Model
 {
+
+
+    protected $table = 'peminjaman';
+
     protected $fillable = [
         'id',
         'nama_peminjam',
@@ -17,10 +21,10 @@ class Peminjaman extends Model
         'ruangan',
         'jumlah',
         'status',
-        'id_data_barang'
+        'id_databarang'
     ];
 
-    public function databarang() {
-        return this->belongsTo(Databarang::class);
+    public function dataBarang() {
+        return this->belongsTo(DataBarang::class);
     }
 }
