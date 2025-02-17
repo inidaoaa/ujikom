@@ -46,14 +46,14 @@
                                         <td class="text-center">{{ $data->jumlah }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('pembelian.edit', $data->id) }}" class="btn btn-sm btn-warning">
-                                                <i class="fas fa-edit"></i> Edit
+                                                <i class="fas fa-edit"></i>
                                             </a>
 
                                             <form action="{{ route('pembelian.destroy', $data->id) }}" method="POST" class="d-inline delete-confirm" data-id="{{ $data->id }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="{{route('pembelian.destroy', $data->id)}}" type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
-                                                    <i class="fas fa-trash"></i> Delete
+                                                    <i class="fas fa-trash"></i>
                                                 </a>
                                             </form>
                                         </td>

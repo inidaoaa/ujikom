@@ -25,6 +25,10 @@ class Peminjaman extends Model
     ];
 
     public function dataBarang() {
-        return this->belongsTo(DataBarang::class);
+        return $this->belongsTo(DataBarang::class);
+    }
+
+    public function detailPeminjaman() {
+        return $this->hasMany(DetailPeminjaman::class, 'id_peminjaman');
     }
 }

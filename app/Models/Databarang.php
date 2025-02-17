@@ -39,6 +39,11 @@ class Databarang extends Model
     return $this->hasMany(Peminjaman::class, 'id_databarang');
     }
 
+    public function detailPeminjaman()
+    {
+        return $this->hasMany(DetailPeminjaman::class, 'id_barang');
+    }
+
 
 
 }

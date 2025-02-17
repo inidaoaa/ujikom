@@ -7,74 +7,89 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Tambah Data Pembelian</h5>
-                    <a href="{{ route('pembelian.index') }}" class="btn btn-sm btn-light">
+                    <h5 class="mb-0">Tambah Data Peminjaman</h5>
+                    <a href="{{ route('peminjaman.index') }}" class="btn btn-sm btn-light">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('pembelian.store') }}" method="POST">
+                    <form action="{{ route('peminjaman.store') }}" method="POST">
                         @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Nama Peminjam</label>
+                            <input type="text" class="form-control @error('nama_peminjam') is-invalid @enderror" name="nama_peminjam" value="{{ old('nama_peminjam') }}" required>
+                            @error('nama_peminjam')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
+
+                        <!-- Input untuk barang yang dipinjam -->
+                        <div id="barang-container">
+                            <div class="barang-item mb-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Nama Barang</label>
+                                        <select class="form-control @error('barang_id.*') is-invalid @enderror" name="barang_id[]" required>
+                                            <option value="" selected disabled>Pilih Nama Barang</option>
+                                            @foreach($databarang as $barang)
+                                                <option value="{{ $barang->id }}" {{ old('barang_id.0') == $barang->id ? 'selected' : '' }}>
+                                                    {{ $barang->nama_barang }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('barang_id.*')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Jumlah</label>
+                                        <input type="number" class="form-control @error('jumlah.*') is-invalid @enderror" name="jumlah[]" min="1" required>
+                                        @error('jumlah.*')
+                                        <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tombol untuk menambah barang -->
 
                         <div class="mb-3">
-                            <label class="form-label">Nama Barang</label>
-                            <select class="form-control @error('id_databarang') is-invalid @enderror" name="id_databarang" required>
-                                <option value="" selected disabled>Pilih Nama Barang</option>
-                                @foreach($databarang as $barang)
-                                    <option value="{{ $barang->id }}" {{ old('id_databarang') == $barang->id ? 'selected' : '' }}>
-                                        {{ $barang->nama_barang }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('id_databarang')
+                            <label class="form-label">Tanggal Pinjam</label>
+                            <input type="date" class="form-control @error('tanggal_pinjam') is-invalid @enderror" name="tanggal_pinjam" value="{{ old('tanggal_pinjam') }}" required>
+                            @error('tanggal_pinjam')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Jenis Barang</label>
-                            <select class="form-control @error('jenis_barang') is-invalid @enderror" name="jenis_barang" required>
-                                <option value="" disabled selected>Pilih Jenis Barang</option>
-                                <option value="Furniture" {{ old('jenis_barang') == 'Furniture' ? 'selected' : '' }}>Furniture</option>
-                                <option value="Elektronik" {{ old('jenis_barang') == 'Elektronik' ? 'selected' : '' }}>Elektronik</option>
-                            </select>
-                            @error('jenis_barang')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Tahun Pembelian</label>
-                            <input type="date" class="form-control @error('tahun_pembelian') is-invalid @enderror"
-                                name="tahun_pembelian" value="{{ old('tahun_pembelian') }}" placeholder="Tahun Pembelian" required>
-                            @error('tahun_pembelian')
+                            <label class="form-label">Tanggal Kembali</label>
+                            <input type="date" class="form-control @error('tanggal_kembali') is-invalid @enderror" name="tanggal_kembali" value="{{ old('tanggal_kembali') }}" required>
+                            @error('tanggal_kembali')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Harga</label>
-                            <input type="text" class="form-control @error('harga') is-invalid @enderror"
-                                name="harga" value="{{ old('harga') }}" placeholder="Harga Barang" required>
-                            @error('harga')
+                            <label class="form-label">Lokasi Awal</label>
+                            <input type="text" class="form-control @error('lokasi_awal') is-invalid @enderror" name="lokasi_awal" value="{{ old('lokasi_awal') }}" required>
+                            @error('lokasi_awal')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Jumlah</label>
-                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
-                                name="jumlah" value="{{ old('jumlah') }}" placeholder="Jumlah Barang" required>
-                            @error('jumlah')
+                            <label class="form-label">Lokasi Pinjaman</label>
+                            <input type="text" class="form-control @error('lokasi_pinjam') is-invalid @enderror" name="lokasi_pinjam" value="{{ old('lokasi_pinjam') }}" required>
+                            @error('lokasi_pinjam')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Keterangan</label>
-                            <textarea class="form-control @error('keterangan') is-invalid @enderror"
-                                name="keterangan" placeholder="Keterangan">{{ old('keterangan') }}</textarea>
-                            @error('keterangan')
+                            <label class="form-label">Ruangan</label>
+                            <input type="text" class="form-control @error('ruangan') is-invalid @enderror" name="ruangan" value="{{ old('ruangan') }}" required>
+                            @error('ruangan')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
@@ -87,14 +102,40 @@
         </div>
     </div>
 </div>
-@endsection
 
-@if ($errors->any())
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            html: '{!! implode("<br>", $errors->all()) !!}',
-        });
-    </script>
-@endif
+<script>
+    // Fungsi untuk menambah input barang
+    function addBarang() {
+        const container = document.getElementById('barang-container');
+        const newItem = document.createElement('div');
+        newItem.classList.add('barang-item', 'mb-3');
+        newItem.innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Nama Barang</label>
+                    <select class="form-control" name="barang_id[]" required>
+                        <option value="" selected disabled>Pilih Nama Barang</option>
+                        @foreach($databarang as $barang)
+                            <option value="{{ $barang->id }}">{{ $barang->nama_barang }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Jumlah</label>
+                    <input type="number" class="form-control" name="jumlah[]" min="1" required>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeBarang(this)">Hapus</button>
+                </div>
+            </div>
+        `;
+        container.appendChild(newItem);
+    }
+
+    // Fungsi untuk menghapus input barang
+    function removeBarang(button) {
+        const item = button.closest('.barang-item');
+        item.remove();
+    }
+</script>
+@endsection
