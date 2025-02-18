@@ -30,6 +30,7 @@
                                         <th>Jenis Barang</th>
                                         <th>Tahun Pembelian</th>
                                         <th>Harga</th>
+                                        <th>Keterangan</th>
                                         <th>Jumlah</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -43,6 +44,7 @@
                                         <td>{{ $data->jenis_barang }}</td>
                                         <td>{{ $data->tahun_pembelian }}</td>
                                         <td>{{ $data->harga }}</td>
+                                        <td>{{ $data->keterangan}}</td>
                                         <td class="text-center">{{ $data->jumlah }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('pembelian.edit', $data->id) }}" class="btn btn-sm btn-warning">

@@ -111,7 +111,7 @@ License: For each use you must have a valid license purchased only from above li
 										<div class="menu-item px-5">
                                             <form action="{{ route('logout') }}" method="POST" class="menu-link px-5">
                                                 @csrf
-                                                <button type="submit" class="btn btn-link" style="text-decoration: none;">Sign Out</button>
+                                                <button type="submit" class="btn btn-link" style="text-decoration: none;">Keluar</button>
                                             </form>
                                         </div>
 

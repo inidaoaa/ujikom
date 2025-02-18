@@ -9,7 +9,7 @@ class DetailPeminjaman extends Model
 {
     use HasFactory;
 
-    protected $table = 'detail_peminjaman'; 
+    protected $table = 'detail_peminjaman';
 
     protected $fillable = [
         'id_peminjaman',
@@ -21,13 +21,13 @@ class DetailPeminjaman extends Model
     /**
      * Relasi ke tabel Peminjaman (satu peminjaman memiliki banyak detail).
      */
-    public function peminjaman()
-    {
-        return $this->belongsTo(Peminjaman::class);
-    }
+    // public function peminjaman()
+    // {
+    //     return $this->belongsTo(Peminjaman::class);
+    // }
 
-    public function dataBarang()
-    {
-        return $this->belongsTo(DataBarang::class);
-    }
+    // public function dataBarang()
+    // {
+    //     return $this->belongsTo(DataBarang::class);
+    // }
 }

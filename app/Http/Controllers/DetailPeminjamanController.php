@@ -12,7 +12,7 @@ class DetailPeminjamanController extends Controller
      */
     public function index()
     {
-        $detailPeminjaman = DetailPeminjaman::with(['peminjaman', 'barang'])->get();
+        $detailPeminjaman = DetailPeminjaman::with(['peminjaman', 'barang'])->paginate(10);
         return view('detailpeminjaman.index', compact('detailPeminjaman'));
     }
 }
