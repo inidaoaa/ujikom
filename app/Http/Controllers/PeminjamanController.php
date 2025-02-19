@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use App\Models\DataBarang;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PeminjamanController extends Controller
@@ -17,61 +18,66 @@ class PeminjamanController extends Controller
 
     public function create()
     {
+        $peminjaman = Peminjaman::with('dataBarang')->where('status', 'dipinjam')->get();
         $databarang = DataBarang::all();
-        return view('peminjaman.create', compact('databarang'));
+        return view('peminjaman.create', compact('databarang', 'peminjaman'));
     }
 
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
-            'nama_peminjam' => 'required|string|max:255',
             'id_databarang' => 'required|exists:databarang,id',
+            'nama_peminjam' => 'required|string|max:255',
             'jumlah' => 'required|integer|min:1',
             'jenis_barang' => 'required|string|max:255',
             'tanggal_pinjam' => 'required|date',
-            'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
+            'tanggal_kembali' => 'nullable|date|after_or_equal:tanggal_pinjam',
             'lokasi_awal' => 'required|string|max:255',
             'lokasi_pinjam' => 'required|string|max:255',
-            'ruangan' => 'required|string|max:255',
+            'ruangan' => 'nullable|string|max:255',
         ]);
 
-        // Ambil barang yang dipinjam
-        $barang = DataBarang::find($request->id_databarang);
+        DB::beginTransaction();
 
-        if (!$barang) {
-            Alert::error('Error', 'Barang tidak ditemukan!');
-            return redirect()->back()->withInput();
+        try {
+            $databarang = DataBarang::findOrFail($request->id_databarang);
+
+            if ($databarang->jumlah == 0) {
+                return back()->with('error', 'Stok barang habis, tidak dapat dipinjam!')->withInput();
+            }
+
+            if ($databarang->jumlah < $request->jumlah) {
+                return back()->with('error', 'Jumlah barang yang dipinjam melebihi stok yang tersedia!')->withInput();
+            }
+
+            // Kurangi stok barang
+            $databarang->decrement('jumlah', $request->jumlah);
+
+            // Simpan data peminjaman
+            Peminjaman::create([
+                'id_databarang' => $request->id_databarang,
+                'nama_peminjam' => $request->nama_peminjam,
+                'jumlah' => $request->jumlah,
+                'jenis_barang' => $request->jenis_barang,
+                'tanggal_pinjam' => $request->tanggal_pinjam,
+                'tanggal_kembali' => $request->tanggal_kembali,
+                'lokasi_awal' => $request->lokasi_awal,
+                'lokasi_pinjam' => $request->lokasi_pinjam,
+                'ruangan' => $request->ruangan,
+                'status' => 'Dipinjam',
+            ]);
+
+            DB::commit();
+
+            Alert::success('Sukses!', 'Barang berhasil dipinjam dan jumlah barang diperbarui.');
+            return redirect()->route('peminjaman.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage())->withInput();
         }
-
-        // Cek apakah jumlah barang tersedia
-        if ($request->jumlah > $barang->stok) {
-            Alert::error('Error', 'Stok barang tidak mencukupi!');
-            return redirect()->back()->withInput();
-        }
-
-        // Kurangi stok barang yang dipinjam
-        $barang->stok -= $request->jumlah;
-        $barang->save();
-
-        // Buat peminjaman baru
-        $peminjaman = new Peminjaman();
-        $peminjaman->nama_peminjam = $request->nama_peminjam;
-        $peminjaman->jenis_barang = $request->jenis_barang;
-        $peminjaman->tanggal_pinjam = $request->tanggal_pinjam;
-        $peminjaman->tanggal_kembali = $request->tanggal_kembali;
-        $peminjaman->lokasi_awal = $request->lokasi_awal;
-        $peminjaman->lokasi_pinjam = $request->lokasi_pinjam;
-        $peminjaman->ruangan = $request->ruangan;
-        $peminjaman->id_databarang = $request->id_databarang;
-        $peminjaman->jumlah = $request->jumlah;
-        $peminjaman->status = 'Dipinjam';
-        $peminjaman->save();
-
-        // Berikan notifikasi sukses
-        Alert::success('Sukses', 'Peminjaman berhasil ditambahkan!');
-        return redirect()->route('peminjaman.index');
     }
+
+
 
     public function edit($id)
     {
@@ -81,59 +87,53 @@ class PeminjamanController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi input
         $request->validate([
             'nama_peminjam' => 'required|string|max:255',
-            'jenis_barang' => 'required|string|max:255',
             'tanggal_pinjam' => 'required|date',
             'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
-            'lokasi_awal' => 'required|string|max:255',
-            'lokasi_pinjam' => 'required|string|max:255',
-            'ruangan' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
 
         $peminjaman = Peminjaman::findOrFail($id);
 
-        // Cek apakah statusnya diubah menjadi 'dikembalikan'
-        if ($request->status === 'dikembalikan' && $peminjaman->status !== 'dikembalikan') {
+        if ($request->status === 'Dikembalikan' && $peminjaman->status !== 'Dikembalikan') {
             $barang = DataBarang::find($peminjaman->id_databarang);
             if ($barang) {
-                // Tambahkan kembali stok barang
                 $barang->stok += $peminjaman->jumlah;
                 $barang->save();
             }
         }
 
-        // Update data peminjaman
-        $peminjaman->update($request->only([
-            'nama_peminjam', 'jenis_barang', 'tanggal_pinjam', 'tanggal_kembali',
-            'lokasi_awal', 'lokasi_pinjam', 'ruangan', 'status'
-        ]));
+        $peminjaman->update($request->all());
 
-        // Berikan notifikasi sukses
         Alert::success('Sukses', 'Peminjaman berhasil diperbarui!');
         return redirect()->route('peminjaman.index');
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
+        DB::beginTransaction();
 
-        // Tambahkan kembali stok barang jika peminjaman belum dikembalikan
-        if ($peminjaman->status === 'dipinjam') {
-            $barang = DataBarang::find($peminjaman->id_databarang);
-            if ($barang) {
-                $barang->stok += $peminjaman->jumlah;
-                $barang->save();
-            }
+        try {
+            $peminjaman = Peminjaman::findOrFail($id);
+            $databarang = DataBarang::findOrFail($peminjaman->id_databarang);
+
+            // Kembalikan stok barang
+            $databarang->increment('jumlah', $peminjaman->jumlah);
+
+            // Hapus data peminjaman
+            $peminjaman->delete();
+
+            DB::commit();
+
+            Alert::success('Sukses!', 'Peminjaman berhasil dihapus dan stok barang dikembalikan.');
+            return redirect()->route('peminjaman.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()); // ✅ Kurung diperbaiki
         }
-
-        // Hapus peminjaman
-        $peminjaman->delete();
-
-        // Berikan notifikasi sukses
-        Alert::success('Sukses', 'Peminjaman berhasil dihapus!');
-        return redirect()->route('peminjaman.index');
     }
+
+
+
 }

@@ -332,19 +332,19 @@ License: For each use you must have a valid license purchased only from above li
 												<!--begin:Menu item-->
 												<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 													<!--begin:Menu link-->
-													<span class="menu-link">
+													<a class="menu-link" href="{{route('pengembalian.index')}}">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
 														<span class="menu-title">Menu Pengembalian</span>
-													</span>
+													</a>
 													<!--end:Menu link-->
 												</div>
 												<!--end:Menu item-->
 												<!--begin:Menu item-->
 												<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 													<!--begin:Menu link-->
-													<span class="menu-link">
+													<span class="menu-link" href="#">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>

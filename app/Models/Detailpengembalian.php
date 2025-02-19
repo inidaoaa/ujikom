@@ -21,13 +21,13 @@ class DetailPeminjaman extends Model
     /**
      * Relasi ke tabel pengembalian (satu pengembalian memiliki banyak detail).
      */
-    public function pengembalian()
-    {
-        return $this->belongsTo(Pengembalian::class);
-    }
+    // public function pengembalian()
+    // {
+    //     return $this->belongsTo(Pengembalian::class);
+    // }
 
-    public function barang()
-    {
-        return $this->belongsTo(DataBarang::class);
-    }
+    // public function barang()
+    // {
+    //     return $this->belongsTo(DataBarang::class);
+    // }
 }

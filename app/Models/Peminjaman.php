@@ -11,7 +11,6 @@ class Peminjaman extends Model
     protected $table = 'peminjaman';
 
     protected $fillable = [
-        'id',
         'nama_peminjam',
         'jenis_barang',
         'tanggal_pinjam',
@@ -24,11 +23,9 @@ class Peminjaman extends Model
         'id_databarang'
     ];
 
+
     public function dataBarang() {
         return $this->belongsTo(DataBarang::class, 'id_databarang');
     }
 
-    // public function detailPeminjaman() {
-    //     return $this->hasMany(DetailPeminjaman::class, 'id_peminjaman');
-    // }
 }
