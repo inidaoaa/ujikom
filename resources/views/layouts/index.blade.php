@@ -344,12 +344,12 @@ License: For each use you must have a valid license purchased only from above li
 												<!--begin:Menu item-->
 												<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 													<!--begin:Menu link-->
-													<span class="menu-link" href="#">
+													<a class="menu-link" href="{{route('detailpengembalian.index')}}">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
 														<span class="menu-title">Detail Pengembalian</span>
-													</span>
+													</a>
 													<!--end:Menu link-->
 												</div>
 												<!--end:Menu item-->
@@ -407,6 +407,7 @@ License: For each use you must have a valid license purchased only from above li
 		<script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 		<script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
 		<!--end::Global Javascript Bundle-->
+        
 		<!--begin::Vendors Javascript(used for this page only)-->
 		<script src="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
 		<script src="https://cdn.amcharts.com/lib/5/index.js"></script>

@@ -14,6 +14,11 @@ class BarangMutasiController extends Controller
      */
     public function index(Request $request)
     {
+        // alert
+        $title = 'Hapus Data?';
+        $text = "Isi Data tidak dapat kembali";
+        confirmDelete($title, $text);
+        //
         $search = $request->input('search');
 
         $barangMutasi = BarangMutasi::with('dataBarang')

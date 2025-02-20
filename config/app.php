@@ -123,12 +123,14 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-//     'providers' => [
-//     /*
-//     * Package Service Providers...
-//     */
-//     RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-// ],
+//      'providers' => [
+//      /*
+//      * Package Service Providers...
+//      */
+//     //  RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+//  ],
+
+
 
 
 ];

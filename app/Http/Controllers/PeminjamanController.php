@@ -12,6 +12,11 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
+        // alert
+        $title = 'Hapus Data?';
+        $text = "Isi Data tidak dapat kembali";
+        confirmDelete($title, $text);
+
         $peminjaman = Peminjaman::paginate(10);
         return view('peminjaman.index', compact('peminjaman'));
     }

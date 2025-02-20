@@ -52,14 +52,14 @@
                                     <td>{{ $mutasi->ruangan }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('barangmutasi.edit', $mutasi->id) }}" class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i> Edit
+                                            <i class="fas fa-edit"></i>
                                         </a>
 
                                         <form action="{{ route('barangmutasi.destroy', $mutasi->id) }}" method="POST" class="d-inline delete-confirm" data-confirm-delete="true">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="{{route('barangmutasi.destroy', $data->id)}}" type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
-                                                <i class="fas fa-trash"></i> Delete
+                                            <a href="{{route('barangmutasi.destroy', $mutasi->id)}}" type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
+                                                <i class="fas fa-trash"></i>
                                             </a>
                                         </form>
                                     </td>

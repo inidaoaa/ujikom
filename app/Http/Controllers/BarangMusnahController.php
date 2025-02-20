@@ -12,8 +12,12 @@ class BarangMusnahController extends Controller
 {
     public function index(Request $request)
     {
+        // alert
+        $title = 'Hapus Data?';
+        $text = "Isi Data tidak dapat kembali";
+        confirmDelete($title, $text);
+        // 
         $search = $request->input('search');
-
         $barangMusnah = BarangMusnah::with('dataBarang')
             ->when($search, function ($query, $search) {
                 return $query->where('jenis_barang', 'like', "%{$search}%")
@@ -47,7 +51,7 @@ class BarangMusnahController extends Controller
             if ($databarang->jumlah == 0) {
                 return back()->with('error', 'Stok barang habis, tidak dapat dimusnahkan!')->withInput();
             }
-            
+
             if ($databarang->jumlah < $request->jumlah) {
                 return back()->with('error', 'Jumlah barang yang dimusnahkan melebihi stok yang tersedia!')->withInput();
             }

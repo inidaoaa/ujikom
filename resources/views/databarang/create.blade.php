@@ -1,4 +1,4 @@
-@extends('layouts.index')
+{{-- @extends('layouts.index')
 
 @section('content')
 <div class="container">
@@ -7,9 +7,9 @@
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Tambah Data Barang</h5>
-                    <a href="{{ route('databarang.index') }}" class="btn btn-sm btn-light">
-                        <i class="fas fa-arrow-left"></i> Kembali
-                    </a>
+                    <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#createModal">
+                        <i class="fas fa-plus"></i> Tambah Data
+                    </button>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('databarang.store') }}" method="POST">
@@ -54,3 +54,4 @@
     </div>
 </div>
 @endsection
+ --}}

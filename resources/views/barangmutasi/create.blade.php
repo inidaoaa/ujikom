@@ -96,8 +96,8 @@
                         <!-- Keterangan -->
                         <div class="mb-3">
                             <label class="form-label">Keterangan</label>
-                            <input type="text" class="form-control @error('keterangan') is-invalid @enderror"
-                                   name="keterangan" value="{{ old('keterangan') }}" placeholder="Keterangan" optional>
+                            <textarea class="form-control @error('keterangan') is-invalid @enderror"
+                                name="keterangan" placeholder="Keterangan">{{ old('keterangan') }}</textarea>
                             @error('keterangan')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror

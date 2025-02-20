@@ -63,21 +63,21 @@
                                         </td>
                                         <td>
                                             <div class="row">
-                                                <div class="col d-flex col-sm-6">
+                                                {{-- <div class="col d-flex col-sm-6">
                                                     <a href="{{ route('peminjaman.edit', $data->id) }}"
                                                         class="btn btn-sm btn-warning">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col d-flex col-sm-6">
                                                     <form action="{{ route('peminjaman.destroy', $data->id) }}"
                                                         method="POST" class="d-inline delete-confirm"
                                                         data-id="{{ $data->id }}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger">
+                                                        <a type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
                                                             <i class="fas fa-trash"></i>
-                                                        </button>
+                                                        </a>
                                                     </form>
                                                 </div>
                                             </div>

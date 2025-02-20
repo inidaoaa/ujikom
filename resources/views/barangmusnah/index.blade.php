@@ -66,9 +66,9 @@
                                         <form action="{{ route('barangmusnah.destroy', $data->id) }}" method="POST" class="d-inline delete-confirm">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </button>
+                                            <a type="submit" class="btn btn-sm btn-danger" data-confirm-delete="true">
+                                                <i class="fas fa-trash"></i> 
+                                            </a>
                                         </form>
                                     </td>
                                 </tr>

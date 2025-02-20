@@ -22,7 +22,7 @@ class PengembalianController extends Controller
 
     $peminjaman = Peminjaman::with('dataBarang')->where('status', 'Dipinjam')->get();
     return view('pengembalian.create', compact('peminjaman'));
-    
+
     }
 
 

@@ -8,10 +8,10 @@ use App\Models\Pengembalian;
 use App\Http\Controllers\Illuminate\Database\Eloquent\Collection;
 
 
-class DetailPeminjamanController extends Controller
+class DetailPengembalianController extends Controller
 {
     /**
-     * Menampilkan daftar riwayat detail peminjaman.
+     * 
      */
     public function index()
     {
