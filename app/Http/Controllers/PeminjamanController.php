@@ -17,8 +17,9 @@ class PeminjamanController extends Controller
         $text = "Isi Data tidak dapat kembali";
         confirmDelete($title, $text);
 
+        $databarang = DataBarang::all();
         $peminjaman = Peminjaman::paginate(10);
-        return view('peminjaman.index', compact('peminjaman'));
+        return view('peminjaman.index', compact('peminjaman', 'databarang'));
     }
 
     public function create()

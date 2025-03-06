@@ -16,7 +16,9 @@ class BarangMusnahController extends Controller
         $title = 'Hapus Data?';
         $text = "Isi Data tidak dapat kembali";
         confirmDelete($title, $text);
-        // 
+        //
+
+        $databarang = DataBarang::all();
         $search = $request->input('search');
         $barangMusnah = BarangMusnah::with('dataBarang')
             ->when($search, function ($query, $search) {
@@ -24,7 +26,7 @@ class BarangMusnahController extends Controller
                     ->orWhere('lokasi_mutasi', 'like', "%{$search}%");
             })->paginate(10);
 
-        return view('barangmusnah.index', compact('barangMusnah'));
+        return view('barangmusnah.index', compact('barangMusnah', 'databarang'));
     }
 
     public function create()

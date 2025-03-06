@@ -13,22 +13,24 @@ class BarangMutasiController extends Controller
      * Tampilkan daftar barang mutasi dengan pencarian.
      */
     public function index(Request $request)
-    {
-        // alert
-        $title = 'Hapus Data?';
-        $text = "Isi Data tidak dapat kembali";
-        confirmDelete($title, $text);
-        //
-        $search = $request->input('search');
+{
+    // alert
+    $title = 'Hapus Data?';
+    $text = "Isi Data tidak dapat kembali";
+    confirmDelete($title, $text);
+    //
+    $search = $request->input('search');
 
-        $barangMutasi = BarangMutasi::with('dataBarang')
-            ->when($search, function ($query, $search) {
-             return $query->where('jenis_barang', 'like', "%{$search}%")
-             ->orWhere('lokasi_mutasi', 'like', "%{$search}%");
-            })->paginate(10);
+    $databarang = DataBarang::all();
+    $barangMutasi = BarangMutasi::with('dataBarang')
+        ->when($search, function ($query, $search) {
+            return $query->where('jenis_barang', 'like', "%{$search}%")
+                ->orWhere('lokasi_mutasi', 'like', "%{$search}%");
+        })->paginate(10);
 
-        return view('barangmutasi.index', compact('barangMutasi'));
-    }
+    return view('barangmutasi.index', compact('barangMutasi', 'databarang'));
+}
+
 
     /**
      * Tampilkan form tambah barang mutasi.

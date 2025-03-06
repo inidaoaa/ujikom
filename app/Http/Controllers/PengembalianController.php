@@ -13,8 +13,9 @@ class PengembalianController extends Controller
 {
     public function index()
     {
+        $peminjaman = Peminjaman::all();
         $pengembalian = Pengembalian::paginate(10);
-        return view('pengembalian.index', compact('pengembalian'));
+        return view('pengembalian.index', compact('pengembalian', 'peminjaman'));
     }
 
     public function create()
