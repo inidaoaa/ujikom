@@ -407,7 +407,7 @@ License: For each use you must have a valid license purchased only from above li
 		<script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 		<script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
 		<!--end::Global Javascript Bundle-->
-        
+
 		<!--begin::Vendors Javascript(used for this page only)-->
 		<script src="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
 		<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
@@ -424,6 +424,7 @@ License: For each use you must have a valid license purchased only from above li
 		<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
         <!-- Mengimpor Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css')}}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<!--end::Vendors Javascript-->
 		<!--begin::Custom Javascript(used for this page only)-->
 		<script src="{{asset('assets/js/widgets.bundle')}}"></script>
