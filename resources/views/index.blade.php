@@ -31,16 +31,22 @@
 <div class="card shadow-sm rounded-4 mb-4">
     <div class="card-body">
         <h5 class="card-title">🕓 Aktivitas Terbaru</h5>
-        <ul class="list-group list-group-flush">
-            @foreach ($recentActivities as $activity)
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>{!! $activity['icon'] !!} {{ $activity['text'] }}</span>
-                    <span class="badge bg-secondary rounded-pill">{{ $activity['time'] }}</span>
-                </li>
-            @endforeach
-        </ul>
+
+        @if ($recentActivities->isNotEmpty())
+            <ul class="list-group list-group-flush">
+                @foreach ($recentActivities as $activity)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{!! $activity['icon'] !!} {{ $activity['text'] }}</span>
+                        <span class="badge bg-secondary rounded-pill">{{ $activity['time'] }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        @else
+            <div class="text-center text-muted">😴 Belum ada aktivitas yang dilakukan.</div>
+        @endif
     </div>
 </div>
+
 
 <div class="text-center mt-5 text-muted fst-italic">
     "Tidak harus sibuk setiap hari, tapi selalu siap ketika dibutuhkan." 💪

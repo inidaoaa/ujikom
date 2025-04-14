@@ -64,7 +64,7 @@ class BarangMusnahController extends Controller
             // Insert ke barang_musnah dengan nama_barang
             BarangMusnah::create([
                 'id_databarang' => $request->id_databarang,
-                'nama_barang' => $databarang->nama_barang, // Tambahkan ini
+                'nama_barang' => $databarang->nama_barang, 
                 'jenis_barang' => $request->jenis_barang,
                 'tanggal_pemusnahan' => $request->tanggal_pemusnahan,
                 'keterangan' => $request->keterangan,
