@@ -107,19 +107,19 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tahun Pembelian</label>
-                        <input type="date" class="form-control" name="tahun_pembelian" required>
+                        <input type="date" class="form-control" placeholder="Isi Tahun Pembelian" name="tahun_pembelian" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Harga</label>
-                        <input type="text" class="form-control" name="harga" required>
+                        <input type="text" class="form-control" placeholder="Masukan Harga" name="harga" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Jumlah</label>
-                        <input type="number" class="form-control" name="jumlah" required>
+                        <input type="number" class="form-control" placeholder="Masukan Jumlah" name="jumlah" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Keterangan</label>
-                        <textarea class="form-control" name="keterangan"></textarea>
+                        <textarea class="form-control" placeholder="Tulis Keterangannya" name="keterangan"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
