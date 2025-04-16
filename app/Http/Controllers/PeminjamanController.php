@@ -12,15 +12,25 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        // alert
         $title = 'Hapus Data?';
         $text = "Isi Data tidak dapat kembali";
         confirmDelete($title, $text);
 
         $databarang = DataBarang::all();
         $peminjaman = Peminjaman::paginate(10);
+
+        // Cek apakah ada peminjaman yang melewati batas waktu
+        $peminjamanTerlambat = Peminjaman::where('status', 'Dipinjam')
+            ->whereDate('tanggal_kembali', '<', now()->toDateString())
+            ->count();
+
+        if ($peminjamanTerlambat > 0) {
+            Alert::warning('Peringatan!', "Ada $peminjamanTerlambat barang yang belum dikembalikan dan melewati batas waktu!");
+        }
+
         return view('peminjaman.index', compact('peminjaman', 'databarang'));
     }
+
 
     public function create()
     {
@@ -42,6 +52,12 @@ class PeminjamanController extends Controller
             'lokasi_pinjam' => 'required|string|max:255',
             'ruangan' => 'nullable|string|max:255',
         ]);
+
+        // Cek jika tanggal_kembali lebih awal dari tanggal_pinjam
+        if (strtotime($request->tanggal_kembali) < strtotime($request->tanggal_pinjam)) {
+            Alert::error('Tanggal Tidak Valid', 'Tanggal pengembalian tidak bisa lebih awal dari tanggal peminjaman!');
+            return back()->withInput(); // Kembalikan ke form dengan input yang sudah dimasukkan
+        }
 
         DB::beginTransaction();
 
@@ -83,8 +99,6 @@ class PeminjamanController extends Controller
         }
     }
 
-
-
     public function edit($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
@@ -100,7 +114,12 @@ class PeminjamanController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
+        // Cek jika tanggal_kembali lebih awal dari tanggal_pinjam
         $peminjaman = Peminjaman::findOrFail($id);
+        if (strtotime($request->tanggal_kembali) < strtotime($request->tanggal_pinjam)) {
+            Alert::error('Tanggal Tidak Valid', 'Tanggal pengembalian tidak bisa lebih awal dari tanggal peminjaman!');
+            return back()->withInput(); // Kembalikan ke form dengan input yang sudah dimasukkan
+        }
 
         if ($request->status === 'Dikembalikan' && $peminjaman->status !== 'Dikembalikan') {
             $barang = DataBarang::find($peminjaman->id_databarang);
@@ -136,10 +155,7 @@ class PeminjamanController extends Controller
             return redirect()->route('peminjaman.index');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage()); // ✅ Kurung diperbaiki
+            return back()->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
         }
     }
-
-
-
 }

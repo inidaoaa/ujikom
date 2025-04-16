@@ -46,9 +46,9 @@
                                 <td>{{ $data->keterangan }}</td>
                                 <td class="text-center">{{ $data->jumlah }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $data->id }}">
+                                    {{-- <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $data->id }}">
                                         <i class="fas fa-edit"></i>
-                                    </button>
+                                    </button> --}}
 
                                     <form action="{{ route('pembelian.destroy', $data->id) }}" method="POST" class="d-inline delete-confirm">
                                         @csrf
@@ -101,6 +101,7 @@
                     <div class="mb-3">
                         <label class="form-label">Jenis Barang</label>
                         <select class="form-control" name="jenis_barang" required>
+                            <option value="">Pilih Jenis Barang</option>
                             <option value="Furniture">Furniture</option>
                             <option value="Elektronik">Elektronik</option>
                         </select>

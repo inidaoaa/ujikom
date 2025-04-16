@@ -151,12 +151,13 @@
 
                     <div class="mb-3">
                         <label class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" id="edit-nama" name="nama_barang" required>
+                        <input type="text" class="form-control" placeholder="Masukan Nama Barang" id="edit-nama" name="nama_barang" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Jenis Barang</label>
                         <select class="form-control" id="edit-jenis" name="jenis_barang" required>
+                            <option value="">Pilih Jenis Barang</option>
                             <option value="Furniture">Furniture</option>
                             <option value="Elektronik">Elektronik</option>
                         </select>
@@ -164,11 +165,11 @@
 
                     <div class="mb-3">
                         <label class="form-label">Merek</label>
-                        <input type="text" class="form-control" id="edit-merek" name="merek" required>
+                        <input type="text" class="form-control" placeholder="Masukan Merek" id="edit-merek" name="merek" required>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     </div>
                 </form>

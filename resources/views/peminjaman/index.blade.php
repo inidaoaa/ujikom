@@ -95,92 +95,85 @@
                                 </tr>
 
                                 <!-- Modal Edit -->
-                                <div class="modal fade" id="editModal{{ $data->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $data->id }}" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title" id="editModalLabel{{ $data->id }}">Edit Peminjaman</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ route('peminjaman.update', $data->id) }}" method="POST" class="row g-3">
-                                                    @csrf
-                                                    @method('PUT')
+                                    <div class="modal fade" id="editModal{{ $data->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $data->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary text-white">
+                                                    <h5 class="modal-title" id="editModalLabel{{ $data->id }}">Edit Peminjaman</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('peminjaman.update', $data->id) }}" method="POST" class="row g-3">
+                                                        @csrf
+                                                        @method('PUT')
 
-                                                    <!-- Nama Peminjam -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Nama Peminjam</label>
-                                                        <input type="text" class="form-control" name="nama_peminjam" value="{{ $data->nama_peminjam }}" required>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Nama Peminjam</label>
+                                                            <input type="text" name="nama_peminjam" class="form-control" value="{{ $data->nama_peminjam }}" required>
+                                                        </div>
 
-                                                    <!-- Nama Barang -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Nama Barang</label>
-                                                        <select class="form-control" name="id_databarang" required>
-                                                            <option value="" selected disabled>Pilih Nama Barang</option>
-                                                            @foreach($databarang as $barang)
-                                                                <option value="{{ $barang->id }}" {{ $data->id_databarang == $barang->id ? 'selected' : '' }}>
-                                                                    {{ $barang->nama_barang }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Nama Barang</label>
+                                                            <select name="id_databarang" class="form-control" required>
+                                                                <option value="" disabled>Pilih Nama Barang</option>
+                                                                @foreach($databarang as $barang)
+                                                                    <option value="{{ $barang->id }}" {{ $data->id_databarang == $barang->id ? 'selected' : '' }}>
+                                                                        {{ $barang->nama_barang }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
 
-                                                    <!-- Jenis Barang -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Jenis Barang</label>
-                                                        <select class="form-control" name="jenis_barang" required>
-                                                            <option value="Furniture" {{ $data->jenis_barang == 'Furniture' ? 'selected' : '' }}>Furniture</option>
-                                                            <option value="Elektronik" {{ $data->jenis_barang == 'Elektronik' ? 'selected' : '' }}>Elektronik</option>
-                                                        </select>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Jenis Barang</label>
+                                                            <select name="jenis_barang" class="form-control" required>
+                                                                <option value="">Pilih Jenis Barang</option>
+                                                                <option value="Furniture" {{ $data->jenis_barang == 'Furniture' ? 'selected' : '' }}>Furniture</option>
+                                                                <option value="Elektronik" {{ $data->jenis_barang == 'Elektronik' ? 'selected' : '' }}>Elektronik</option>
+                                                            </select>
+                                                        </div>
 
-                                                    <!-- Tanggal Pinjam -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Tanggal Pinjam</label>
-                                                        <input type="date" class="form-control" name="tanggal_pinjam" value="{{ $data->tanggal_pinjam }}" required>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Tanggal Pinjam</label>
+                                                            <input type="date" name="tanggal_pinjam" class="form-control" value="{{ $data->tanggal_pinjam }}" required>
+                                                        </div>
 
-                                                    <!-- Tanggal Kembali -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Tanggal Kembali</label>
-                                                        <input type="date" class="form-control" name="tanggal_kembali" value="{{ $data->tanggal_kembali }}" required>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Tanggal Kembali</label>
+                                                            <input type="date" name="tanggal_kembali" class="form-control" value="{{ $data->tanggal_kembali }}" required>
+                                                        </div>
 
-                                                    <!-- Lokasi Awal -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Lokasi Awal</label>
-                                                        <input type="text" class="form-control" name="lokasi_awal" value="{{ $data->lokasi_awal }}" required>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Lokasi Awal</label>
+                                                            <input type="text" name="lokasi_awal" class="form-control" value="{{ $data->lokasi_awal }}" required>
+                                                        </div>
 
-                                                    <!-- Lokasi Pinjam -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Lokasi Pinjam</label>
-                                                        <input type="text" class="form-control" name="lokasi_pinjam" value="{{ $data->lokasi_pinjam }}" required>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Lokasi Pinjam</label>
+                                                            <input type="text" name="lokasi_pinjam" class="form-control" value="{{ $data->lokasi_pinjam }}" required>
+                                                        </div>
 
-                                                    <!-- Ruangan -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Ruangan</label>
-                                                        <input type="text" class="form-control" name="ruangan" value="{{ $data->ruangan }}" required>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Ruangan</label>
+                                                            <input type="text" name="ruangan" class="form-control" value="{{ $data->ruangan }}" required>
+                                                        </div>
 
-                                                    <!-- Jumlah -->
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Jumlah</label>
-                                                        <input type="number" class="form-control" name="jumlah" value="{{ $data->jumlah }}" required>
-                                                    </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Jumlah</label>
+                                                            <input type="number" name="jumlah" class="form-control" value="{{ $data->jumlah }}" required>
+                                                        </div>
 
-                                                    <!-- Tombol Submit -->
-                                                    <div class="col-12">
-                                                        <button type="submit" class="btn btn-primary">Update</button>
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                    </div>
-                                                </form>
+                                                        <div class="col-12 text-end">
+                                                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+
+
                                 @empty
                                 <tr>
                                     <td colspan="12" class="text-center text-muted">
@@ -216,7 +209,7 @@
                     <!-- Nama Peminjam -->
                     <div class="col-md-6">
                         <label class="form-label">Nama Peminjam</label>
-                        <input type="text" class="form-control" name="nama_peminjam" required>
+                        <input type="text" class="form-control" placeholder="Masukan Nama Peminjam" name="nama_peminjam" required>
                     </div>
 
                     <!-- Nama Barang -->
@@ -234,6 +227,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Jenis Barang</label>
                         <select class="form-control" name="jenis_barang" required>
+                            <option value="">Pilih Jenis Barang</option>
                             <option value="Furniture">Furniture</option>
                             <option value="Elektronik">Elektronik</option>
                         </select>
@@ -242,37 +236,37 @@
                     <!-- Tanggal Pinjam -->
                     <div class="col-md-6">
                         <label class="form-label">Tanggal Pinjam</label>
-                        <input type="date" class="form-control" name="tanggal_pinjam" required>
+                        <input type="date" class="form-control" placeholder="Masukan Tanggal Pinjam" name="tanggal_pinjam" required>
                     </div>
 
                     <!-- Tanggal Kembali -->
                     <div class="col-md-6">
                         <label class="form-label">Tanggal Kembali</label>
-                        <input type="date" class="form-control" name="tanggal_kembali" required>
+                        <input type="date" class="form-control" placeholder="Masukan Tanggal kembali" name="tanggal_kembali" required>
                     </div>
 
                     <!-- Lokasi Awal -->
                     <div class="col-md-6">
                         <label class="form-label">Lokasi Awal</label>
-                        <input type="text" class="form-control" name="lokasi_awal" required>
+                        <input type="text" class="form-control" placeholder="Masukan Lokasi Awal" name="lokasi_awal" required>
                     </div>
 
                     <!-- Lokasi Pinjam -->
                     <div class="col-md-6">
                         <label class="form-label">Lokasi Pinjam</label>
-                        <input type="text" class="form-control" name="lokasi_pinjam" required>
+                        <input type="text" class="form-control" placeholder="Masukan Lokasi Pinjmanan" name="lokasi_pinjam" required>
                     </div>
 
                     <!-- Ruangan -->
                     <div class="col-md-6">
                         <label class="form-label">Ruangan</label>
-                        <input type="text" class="form-control" name="ruangan" required>
+                        <input type="text" class="form-control" placeholder="Masukan Nama Ruangan" name="ruangan" required>
                     </div>
 
                     <!-- Jumlah -->
                     <div class="col-md-6">
                         <label class="form-label">Jumlah</label>
-                        <input type="number" class="form-control" name="jumlah" required>
+                        <input type="number" class="form-control" placeholder="Isi Jumlah" name="jumlah" required>
                     </div>
 
                     <!-- Tombol Submit -->
@@ -290,6 +284,29 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // Script untuk menampilkan SweetAlert jika ada session 'success'
+    @if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukses!',
+            text: '{{ session('success') }}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    @endif
+
+    // Script untuk menampilkan SweetAlert jika ada session 'error'
+    @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    @endif
+
+    // Konfirmasi Hapus dengan SweetAlert
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll('.delete-confirm').forEach(function(button) {
             button.addEventListener('submit', function(event) {
@@ -313,16 +330,4 @@
         });
     });
 </script>
-
-@if (session('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Sukses!',
-            text: '{{ session('success') }}',
-            timer: 3000,
-            showConfirmButton: false
-        });
-    </script>
-@endif
 @endsection

@@ -14,6 +14,11 @@ class PembelianController extends Controller
      */
     public function index(Request $request)
     {
+
+        $title = 'Hapus Data?';
+        $text = "Isi Data tidak dapat kembali";
+        confirmDelete($title, $text);
+        
         $search = $request->input('search');
 
         // Ambil data barang untuk modal Create
