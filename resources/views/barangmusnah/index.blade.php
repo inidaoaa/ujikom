@@ -65,9 +65,9 @@
                                     <td>{{ $data->keterangan }}</td>
                                     <td class="text-center">
                                         <!-- Tombol Edit untuk Membuka Modal -->
-                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $data->id }}">
+                                        {{-- <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $data->id }}">
                                             <i class="fas fa-edit"></i>
-                                        </button>
+                                        </button> --}}
 
                                         <!-- Tombol Hapus -->
                                         <form action="{{ route('barangmusnah.destroy', $data->id) }}" method="POST" class="d-inline delete-confirm">
@@ -128,6 +128,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Jenis Barang</label>
                         <select class="form-control" name="jenis_barang" required>
+                            <option value="">Pilih Jenis Barang</option>
                             <option value="Furniture">Furniture</option>
                             <option value="Elektronik">Elektronik</option>
                         </select>
@@ -142,13 +143,13 @@
                     <!-- Jumlah -->
                     <div class="col-md-6">
                         <label class="form-label">Jumlah</label>
-                        <input type="number" class="form-control" name="jumlah" required>
+                        <input type="number" class="form-control" placeholder="Masukan Jumlah" name="jumlah" required>
                     </div>
 
                     <!-- Keterangan -->
                     <div class="col-md-12">
                         <label class="form-label">Keterangan</label>
-                        <textarea class="form-control" name="keterangan"></textarea>
+                        <textarea class="form-control" placeholder="isi keterangan" name="keterangan"></textarea>
                     </div>
 
                     <!-- Tombol Submit -->

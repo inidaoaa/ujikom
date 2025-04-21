@@ -10,6 +10,7 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\DetailPeminjamanController;
 use App\Http\Controllers\DetailPengembalianController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
@@ -34,6 +35,7 @@ Route::resource('/barangmusnah', BarangMusnahController::class);
 Route::resource('/peminjaman', PeminjamanController::class);
 Route::resource('/pengembalian', PengembalianController::class);
 Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+Route::get('/laporan', [LaporanController::class, 'showLaporan'])->name('laporan.index');
 Route::resource('/detailpeminjaman', DetailPeminjamanController::class);
 Route::resource('/detailpengembalian', DetailPengembalianController::class);
 

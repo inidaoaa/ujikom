@@ -24,7 +24,7 @@ License: For each use you must have a valid license purchased only from above li
 		<meta property="og:url" content="https://keenthemes.com/metronic" />
 		<meta property="og:site_name" content="Metronic by Keenthemes" />
 		<link rel="canonical" href="http://preview.keenthemes.comindex.html" />
-		<link rel="shortcut icon" href="{{asset('assets/media/logos/favicon.ico')}}" />
+		<link rel="shortcut icon" href="{{asset('assets/media/logos/inventaris.png')}}" />
 		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 		<!--end::Fonts-->
@@ -147,10 +147,8 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="index.html">
-								<img alt="Logo" src="{{asset('assets/media/logos/default-dark.svg')}}" class="h-25px app-sidebar-logo-default" />
+								<img alt="Logo" src="{{asset('assets/media/logos/inven.png')}}" class="h-100px app-sidebar-logo-default" />
 								<img alt="Logo" src="{{asset('assets/media/logos/default-small.svg')}}" class="h-20px app-sidebar-logo-minimize" />
-							</a>
 							<!--end::Logo image-->
 							<!--begin::Sidebar toggle-->
 							<!--begin::Minimized sidebar setup:
@@ -359,18 +357,18 @@ License: For each use you must have a valid license purchased only from above li
 										<!--end:Menu item-->
 										<!--begin:Menu item-->
 										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<!--begin:Menu link-->
-											<span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-element-7 fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-													</i>
-												</span>
-												<span class="menu-title">Laporan</span>
-											</span>
-											<!--end:Menu link-->
-										</div>
+                                                <!--begin:Menu link-->
+                                                <a href="{{ route('laporan.index') }}" class="menu-link">
+                                                    <span class="menu-icon">
+                                                        <i class="ki-duotone ki-element-7 fs-2">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>
+                                                    </span>
+                                                    <span class="menu-title">Laporan</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
 										<!--end:Menu item-->
 									</div>
 									<!--end::Menu-->
@@ -422,6 +420,7 @@ License: For each use you must have a valid license purchased only from above li
 		<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
 		<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- Mengimpor Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css')}}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

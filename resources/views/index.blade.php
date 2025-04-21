@@ -42,14 +42,14 @@
                 @endforeach
             </ul>
         @else
-            <div class="text-center text-muted">😴 Belum ada aktivitas yang dilakukan.</div>
+            <div class="text-center text-muted">Belum ada aktivitas yang dilakukan.</div>
         @endif
     </div>
 </div>
 
 
 <div class="text-center mt-5 text-muted fst-italic">
-    "Tidak harus sibuk setiap hari, tapi selalu siap ketika dibutuhkan." 💪
+    "Web Inventaris barang"
 </div>
 
 
